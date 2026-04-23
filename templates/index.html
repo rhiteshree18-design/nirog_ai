@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="hero card">
+
+    <div class="left-panel">
+
+        <span class="badge">NIROG AI Healthcare</span>
+
+        <h1>Medicine Safety Analyzer</h1>
+
+        <p>
+            Select a medicine to view predicted side-effect severity,
+            known reactions, and practical safety guidance.
+        </p>
+
+        <div class="useful-grid">
+
+            <div class="mini-box">
+                <h3>What You Get</h3>
+                <p>Severity level, side effects, usage insights.</p>
+            </div>
+
+            <div class="mini-box">
+                <h3>Use Case</h3>
+                <p>Academic demo, medicine lookup, safety awareness.</p>
+            </div>
+
+            <div class="mini-box">
+                <h3>Important</h3>
+                <p>AI output is informational, not medical advice.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="right-panel">
+
+        <form action="/predict" method="POST" class="glass-form">
+
+            <h2>Check Medicine</h2>
+
+            <label>Select Medicine</label>
+
+            <select name="drug_name" required>
+                {% for drug in drugs %}
+                <option value="{{drug}}">{{drug}}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Analyze Medicine</button>
+
+        </form>
+        <div class="card upload-box">
+
+            <h2>Upload Medicine Image</h2>
+
+            <form action="/upload-image" method="POST" enctype="multipart/form-data">
+
+                <input type="file" name="medicine_image" accept="image/*" required>
+
+                <button type="submit">Detect From Image</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

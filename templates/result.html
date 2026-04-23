@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card result-card">
+
+    {% if error %}
+    <h2>{{error}}</h2>
+
+    {% else %}
+
+    <span class="badge success">Analysis Ready</span>
+
+    <h1>{{drug}}</h1>
+
+    <p class="subtitle">Medicine Safety Report</p>
+
+    <h3>Risk Meter</h3>
+
+    <div class="meter-wrapper">
+
+        <div class="meter-track">
+
+            {% if severity == "Mild" %}
+            <div class="meter-fill mild-fill" style="width:33%">Low Risk</div>
+
+            {% elif severity == "Moderate" %}
+            <div class="meter-fill moderate-fill" style="width:66%">Moderate Risk</div>
+
+            {% else %}
+            <div class="meter-fill severe-fill" style="width:100%">High Risk</div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+    <div class="recommend-box">
+
+        {% if severity == "Mild" %}
+        Low chance of serious reactions. Use as prescribed.
+
+        {% elif severity == "Moderate" %}
+        Monitor your symptoms. Stop use and consult doctor if discomfort occurs.
+
+        {% else %}
+        Higher reaction risk. Use only with medical supervision.
+
+        {% endif %}
+
+    </div>
+    <h3>Common Uses</h3>
+
+    <div class="info-card-box">
+        {% if info.Uses %}
+        {{ info.Uses.replace('Treatment of', ', Treatment of').lstrip(', ') }}
+        {% else %}
+        No usage information available
+        {% endif %}
+    </div>
+
+
+    <h3>Suggested Safer Alternatives</h3>
+
+    <div class="alt-box">
+
+        {% if severity == "Severe" %}
+
+        <ul>
+            <li>Consult doctor for lower-risk alternatives.</li>
+            <li>Ask for medicines with fewer side effects.</li>
+            <li>Review dosage and suitability before use.</li>
+        </ul>
+
+        {% elif severity == "Moderate" %}
+
+        <ul>
+            <li>Safer options may be available depending on condition.</li>
+            <li>Consult pharmacist or doctor if symptoms occur.</li>
+        </ul>
+
+        {% else %}
+
+        <ul>
+            <li>Current medicine appears lower risk when used properly.</li>
+            <li>Continue only as prescribed.</li>
+        </ul>
+
+        {% endif %}
+
+    </div>
+
+    <h3>Known Side Effects</h3>
+
+    <ul class="effects">
+        {% for e in effects %}
+        <li>{{e.strip()}}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="info-grid">
+
+        <p><b>Manufacturer:</b> {{info.Manufacturer if info.Manufacturer else "N/A"}}</p>
+
+        <p><b>Composition:</b> {{info.Composition if info.Composition else "N/A"}}</p>
+
+        <p><b>Uses:</b> {{info.Uses if info.Uses else "N/A"}}</p>
+
+    </div>
+
+    <a href="/" class="btn-link">Check Another Medicine</a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
