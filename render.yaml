@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: nirog
+    env: python
+    buildCommand: |
+      apt-get update
+      apt-get install -y tesseract-ocr
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app
